@@ -1,0 +1,6 @@
+pops 1 4
+kmax 4
+folded
+task exact_bSFS
+bSFS exact_bSFS.txt
+seed_PRNG 98368183

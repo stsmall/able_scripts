@@ -25,6 +25,8 @@ parser.add_argument("--bin", action="store_true",
                     help="create pseudo-ms with binary instead of gt")
 args = parser.parse_args()
 
+# TODO: make binary parser for bin option
+
 
 def firstchrom(vcfin):
     """
@@ -65,7 +67,7 @@ def makeable(i, pop, p, x, abledict):
     return(abledict)
 
 
-def able2vcf(vcfin, block, popinfo, pops, sizes, rand=False):
+def able2vcf(vcfin, block, popinfo, pops, sizes, rand=True):
     """
     """
     # parse ped
@@ -78,7 +80,7 @@ def able2vcf(vcfin, block, popinfo, pops, sizes, rand=False):
                     peddict[x[0]].append(x[1])
             else:
                 continue
-    poplist = peddict.keys()
+    poplist = pops
     if sizes:
         sizes = map(int, sizes)
         if rand:
@@ -90,7 +92,6 @@ def able2vcf(vcfin, block, popinfo, pops, sizes, rand=False):
             for pop in poplist:
                 i = pops.index(pop)
                 peddict[pop] = peddict[pop][:sizes[i]]
-
     # get initial
     chrom, pos1, pop_iix = firstchrom(vcfin)
     # make able file

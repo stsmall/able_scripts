@@ -22,7 +22,8 @@ parser.add_argument('-p', "--pop", type=str, nargs='+', required=False,
 parser.add_argument('-s', "--size", type=str, nargs='+', required=False,
                     default='', help="how many from each pop, blank uses all")
 parser.add_argument("--bin", action="store_true",
-                    help="create pseudo-ms with binary instead of gt")
+                    help="create pseudo-ms with binary instead of gt requires"
+                    "AA tag in the VCF")
 args = parser.parse_args()
 
 # TODO: make binary parser for bin option
@@ -138,13 +139,15 @@ def able2vcf(vcfin, block, popinfo, pops, sizes, rand=True):
 
 
 def able2vcf_bin(vcf, block, popinfo, pops):
+    """Make binary file for bSFS, requires AA in VCF format field, else default
+    to REF allele as ancestral
     """
-    """
+    return(None)
 
 
 if __name__ == "__main__":
     vcf = args.vcfin
-    block = int(args.block_size)
+    block = args.block_size
     popinfo = args.pedfile
     pops = args.pop
     sizes = args.size

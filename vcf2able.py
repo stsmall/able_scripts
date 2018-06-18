@@ -112,18 +112,27 @@ def able2vcf(vcfin, block, popinfo, pops, sizes, rand=True):
                                 p = pop_iix.index(sample)
                                 abledict = makeable(i, pop, p, x, abledict)
                     else:
+                        # header
                         able.write("\n//\n#{}_{}-{}\n".format(chrom, b,
                                                               block+b))
                         if abledict[pop][0] == '':
+                            # monomorphic
                             pass
                         else:
+                            # polymorphic write out seqs
                             for pop in poplist:
                                 for samp in abledict[pop]:
                                     able.write("{}\n".format(samp))
-                        b += block
+                        # restart with blank set of seq
                         for pop in poplist:
                             abledict[pop] = [''] * 2 * len(peddict[pop])
-                        # restart
+
+                        # catch first instance that trigger else statement
+                        if x[0] != chrom:
+                            b = 0
+                            chrom = x[0]
+                        else:
+                            b += block
                         if (pos <= (block + b)) and (x[0] == chrom):
                             for pop in poplist:
                                 abledict[pop] = [''] * 2 * len(peddict[pop])
@@ -131,6 +140,7 @@ def able2vcf(vcfin, block, popinfo, pops, sizes, rand=True):
                                     p = pop_iix.index(sample)
                                     abledict = makeable(i, pop, p, x, abledict)
                         else:
+                            # nothing in that block, monomorphic so print empty
                             able.write("\n//\n#{}_{}-{}\n".format(chrom, b,
                                                                   block+b))
                             b += block

@@ -100,7 +100,7 @@ def able2vcf(vcfin, block, popinfo, pops, sizes, rand=True):
     for pop in poplist:
         abledict[pop] = [''] * 2 * len(peddict[pop])
     b = 0
-    with open("able.in", 'w') as able:
+    with open("{}.{}.{}.able.in".format("-".join(pops), "-".join(map(str, sizes)), block), 'w') as able:
         with open(vcfin, 'r') as vcf:
             for line in vcf:
                 if not line.startswith("#"):
